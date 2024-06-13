@@ -1,0 +1,2 @@
+pyRofex==0.5.0 
+pydantic-settings==2.3.2
