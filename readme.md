@@ -29,7 +29,7 @@ Leyendo en detalle el código de la librería `pyRofex` encontré que la clase `
 
 La funcionalidad está expuesta a través de [`send_order_via_websocket`](https://github.com/matbarofex/pyRofex/blob/bb03a096e3d9f830486f7ce619c6c70e0889e8fe/src/pyRofex/service.py#L810), y en mis tests parece funcionar correctamente para el envío de órdenes por websocket.
 
-Por lo tanto, no es necesario hacer ninguna modificación a la librería `pyRofex` para poder enviar órdenes por websocket. Además, la funcionalidad existe desde [agosto del 2022](https://github.com/matbarofex/pyRofex/commit/b981c42b2f531d2032f2d474e80b6f81b61d95f5), por lo cual infiero que este enunciado era una trampa para ver si el postulante se tomaba el tiempo de averiguar e investigar.
+Por lo tanto, no es necesario hacer ninguna modificación a la librería `pyRofex` para poder enviar órdenes por websocket. Además, la funcionalidad existe desde [agosto del 2022](https://github.com/matbarofex/pyRofex/commit/b981c42b2f531d2032f2d474e80b6f81b61d95f5) y hay [un ejemplo](https://github.com/matbarofex/pyRofex/blob/master/samples/6_websocket_order_routing.py), por lo cual infiero que este enunciado era una trampa para ver si el postulante se tomaba el tiempo de averiguar e investigar.
 
 ### Escuchar la MD de las acciones GGAL e YPD
 
