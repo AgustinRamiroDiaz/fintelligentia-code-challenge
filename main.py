@@ -1,24 +1,15 @@
 import pyRofex
 import signal
-from pydantic_settings import BaseSettings, SettingsConfigDict
-
-
-class Settings(BaseSettings):
-    auth_user: str
-    auth_password: str
-    auth_account: str
-
-    model_config = SettingsConfigDict(env_file=".env")
+from settings import Settings
 
 
 def graceful_shutdown(_sig, _frame) -> None:
-    print("Shutting down gracefully...")
+    print("Closing pyRofex websocket connection...")
     pyRofex.close_websocket_connection()
 
 
 class Client:
-    def __init__(self):
-        # Initiate Websocket Connection
+    def connect(self):
         pyRofex.init_websocket_connection(
             market_data_handler=self._market_data_handler,
             order_report_handler=self._order_report_handler,
@@ -60,9 +51,13 @@ def main():
     signal.signal(signal.SIGINT, graceful_shutdown)
 
     client = Client()
+    client.connect()
 
     # Instruments list to subscribe
-    instruments = ["YPFD/JUN24", "GGAL/JUN24"]
+    instruments = [
+        "YPFD/JUN24",
+        "GGAL/JUN24",
+    ]
 
     # Uses the MarketDataEntry enum to define the entries we want to subscribe to
     entries = [
