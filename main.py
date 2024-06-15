@@ -1,4 +1,5 @@
 import pyRofex
+import signal
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -8,6 +9,11 @@ class Settings(BaseSettings):
     auth_account: str
 
     model_config = SettingsConfigDict(env_file=".env")
+
+
+def graceful_shutdown(_sig, _frame) -> None:
+    print("Shutting down gracefully...")
+    pyRofex.close_websocket_connection()
 
 
 class Client:
@@ -50,6 +56,8 @@ def main():
         account=settings.auth_account,
         environment=pyRofex.Environment.REMARKET,
     )
+
+    signal.signal(signal.SIGINT, graceful_shutdown)
 
     client = Client()
 
