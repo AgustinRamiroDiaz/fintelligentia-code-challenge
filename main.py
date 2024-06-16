@@ -8,6 +8,9 @@ def graceful_shutdown(_sig, _frame) -> None:
     pyRofex.close_websocket_connection()
 
 
+# Dado que la clase es muy simple, no agregué tests unitarios para la misma
+# Si tuviera lógica más compleja sobre almacenar y procesar los mensajes, agregaría tests unitarios.
+# Haría DI para injectar las funciones de pyRofex, ya que no se pueden mockear porque acceden a un cliente global dentro de la librería y manejan el estado de la conexión en un thread aparte.
 class Client:
     def connect(self):
         pyRofex.init_websocket_connection(
