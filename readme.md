@@ -19,6 +19,20 @@ Compartir el proyecto en Github al usuario levilucchini@gmail.com
 
 ## Solución
 
+Para ejecutar el código, primero hay que instalar las dependencias:
+
+```sh
+pip install -r requirements.txt
+```
+
+Luego configurar las credenciales de MATba/Rofex. Se puede hacer en un archivo `.env` como se ve en el archivo `.env.example`, o sino mediante variables de entorno.
+
+Luego, se puede ejecutar el código con:
+
+```sh
+python main.py
+```
+
 ### Conexión al ambiente de test de MATba/Rofex a través de WebSocket
 
 Hecho en el archivo `main.py`.
@@ -42,3 +56,22 @@ TODO
 ### Cotizar bid y ask de ambos activos según la lógica anterior
 
 TODO
+
+## Notas
+
+No llegué a concretar la parte algorítmica de este desafío. El poco tiempo que le pude dedicar lo invertí todo en explorar el problema y la librería `pyRofex`. Actualmente (sábado a la noche víspera de día del padre) estoy escribiendo este README para documentar mis pensamientos y el camino que seguiría si tuviera más tiempo.
+
+Investigué un poco sobre carry trade y TNA:
+
+- entiendo que TNA es la tasa nominal anual
+- entiendo que carry trade es una estrategia de inversión que consiste en tomar prestado en una moneda con una tasa de interés baja y prestar en una moneda con una tasa de interés alta
+- me queda la duda de a qué se refiere el "precio del futuro", ya que entiendo que el futuro no tiene un precio sino los precios de bid y ask y sus respectivas cantidades. Supongo que se refiere a calcular el precio de un futuro en base a la tasa de interés y el precio spot.
+
+En cuanto a la implementación, creo que la mejor forma de hacerlo sería:
+
+- obtener los precios spot (bid y ask) de GGAL y YPF
+- obtener la tasa de interés de la TNA
+  - no sé si se puede obtener de la API de MATba/Rofex, aparece la columna en https://mtr.primary.ventures/futuros/financieros pero está vacía
+- crear una función `futuro_predictor` que pueda predecir el precio de un futuro en base a la tasa de interés y el precio spot llamada
+  - agregaría tests unitarios para corroborar el comportamiento de la función
+  - entiendo que la función es stateless, por lo cual no necesitaría un objeto para encapsularla. En algún momento pensé que el algoritmo de carry trade podría necesitar múltiples datos de bid y ask para calcular el precio futuro, y en ese caso lo hubiera encapsulado en una clase.
